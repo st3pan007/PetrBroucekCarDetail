@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Car Detailing - Mistrovská péče pro váš vůz</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-dark: #0A0A0A;
+            --secondary-dark: #1a1a1a;
+            --accent-gold: #D4AF37;
+            --accent-silver: #C0C0C0;
+            --text-light: #ffffff;
+            --text-gray: #b0b0b0;
+            --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #F4E4C1 100%);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            cursor: default;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--primary-dark);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 4px;
+        }
+        
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section with Liquid Metal Effect */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .hero-title {
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .hero-description {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Story Section */
+        .story {
+            padding: 8rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        
+        .story-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .story-card {
+            background: var(--secondary-dark);
+            padding: 3rem;
+            border-radius: 20px;
+            transform: rotate(-2deg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-gold);
+        }
+        
+        .story-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            transform: rotate(2deg);
+        }
+        
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .story-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Transformation Slider */
+        .transformation {
+            padding: 8rem 5%;
+            background: var(--secondary-dark);
+        }
+        
+        .transformation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .before-after-slider {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            margin: 3rem auto;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: ew-resize;
+        }
+        
+        .before-after-slider img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .after-image {
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-gold);
+            cursor: ew-resize;
+            transform: translateX(-50%);
+        }
+        
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+        
+        /* Services Grid */
+        .services {
+            padding: 8rem 5%;
+        }
+        
+        .services-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .service-card {
+            background: var(--secondary-dark);
+            padding: 3rem;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-gold);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .service-icon svg {
+            width: 35px;
+            height: 35px;
+            fill: var(--primary-dark);
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .eco-badge {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Process Timeline */
+        .process {
+            padding: 8rem 5%;
+            background: var(--secondary-dark);
+        }
+        
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 4rem 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+            transform: translateX(50px);
+        }
+        
+        .timeline-number {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            opacity: 0.2;
+            margin: 0 3rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: var(--primary-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            position: relative;
+        }
+        
+        .timeline-content h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+        
+        /* Portfolio Gallery */
+        .portfolio {
+            padding: 8rem 5%;
+        }
+        
+        .portfolio-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px);
+            height: 400px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(212, 175, 55, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 8rem 5%;
+            background: var(--secondary-dark);
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .testimonial-card {
+            background: var(--primary-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            position: relative;
+        }
+        
+        .testimonial-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stars {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--accent-gold);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 8rem 5%;
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: stretch;
+        }
+        
+        .contact-info {
+            background: var(--secondary-dark);
+            padding: 3rem;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 500px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-gold);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary-dark);
+        }
+        
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            min-height: 500px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            background: var(--primary-dark);
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .story-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                flex-direction: column;
+                transform: none !important;
+            }
+            
+            .timeline-number {
+                margin: 1rem 0;
+            }
+        }
+        
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader-inner {
+            width: 80px;
+            height: 80px;
+            border: 3px solid transparent;
+            border-top-color: var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-inner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ELITE DETAILING</div>
+            <ul class="nav-links">
+                <li><a href="#home">Domů</a></li>
+                <li><a href="#services">Služby</a></li>
+                <li><a href="#process">Proces</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div id="canvas-container"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle">Precision Meets Passion</p>
+            <h1 class="hero-title">Váš vůz zaslouží<br>mistrovskou péči</h1>
+            <p class="hero-description">Přeměňujeme obyčejné automobily v zářící mistrovská díla pomocí nejmodernějších technologií a vášně pro dokonalost.</p>
+            <a href="#contact" class="cta-button">Rezervovat termín detailingu</a>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story" id="story">
+        <div class="story-container">
+            <div class="story-content">
+                <div class="story-card">
+                    <h2>Od běžného k výjimečnému</h2>
+                    <p>Každý automobil má svůj příběh. Naším posláním je vrátit mu jeho původní krásu a lesk. S více než 15 lety zkušeností a tisíci spokojených klientů jsme mistři v tom, co děláme.</p>
+                    <p style="margin-top: 1.5rem;">Používáme pouze ty nejkvalitnější produkty a nejmodernější technologie, abychom zajistili, že váš vůz bude vypadat lépe než v den, kdy opustil výrobní linku.</p>
+                </div>
+            </div>
+            <div class="story-image">
+                <img src="https://images.pexels.com/photos/6873080/pexels-photo-6873080.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Detailing process">
+            </div>
+        </div>
+    </section>
+
+    <!-- Transformation Slider -->
+    <section class="transformation" id="transformation">
+        <div class="transformation-container">
+            <h2>Transformace, která mluví za vše</h2>
+            <p>Posuňte slider a objevte rozdíl, který dokáže profesionální detailing</p>
+            <div class="before-after-slider">
+                <img src="https://images.pexels.com/photos/13065690/pexels-photo-13065690.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Before detailing">
+                <img src="https://images.pexels.com/photos/3752194/pexels-photo-3752194.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="After detailing" class="after-image">
+                <div class="slider-handle">
+                    <div class="slider-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M8 12L4 8L8 4M16 12L20 8L16 4M4 8H20M8 20L4 16L8 12M16 20L20 16L16 12M4 16H20" stroke="#0A0A0A" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="services-container">
+            <h2>Technologie budoucnosti, péče ze srdce</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4H15C14.45 4 14 4.45 14 5V6H10V5C10 4.45 9.55 4 9 4H6.5C5.84 4 5.28 4.42 5.08 5.01L3 11V19C3 19.55 3.45 20 4 20H5C5.55 20 6 19.55 6 19V18H18V19C18 19.55 18.45 20 19 20H20C20.55 20 21 19.55 21 19V11L18.92 5.01ZM6.5 15C5.67 15 5 14.33 5 13.5S5.67 12 6.5 12S8 12.67 8 13.5S7.33 15 6.5 15ZM17.5 15C16.67 15 16 14.33 16 13.5S16.67 12 17.5 12S19 12.67 19 13.5S18.33 15 17.5 15ZM5 10L6.5 5.5H9V10H5ZM15 10V5.5H17.5L19 10H15Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Exteriér Detailing</h3>
+                    <p>Kompletní péče o lak včetně dekontaminace, korekce laku a aplikace keramické ochrany. Váš vůz získá hloubkový lesk a dlouhodobou ochranu.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M7 11H17C18.1 11 19 11.9 19 13V19H17V21H13V19H11V21H7V19H5V13C5 11.9 5.9 11 7 11M7 13V17H17V13H7M7 4H11V8.5C11 9.33 11.67 10 12.5 10H15.5C16.33 10 17 9.33 17 8.5V4H17C18.1 4 19 4.9 19 6V9H17V6H15V8.5C15 8.22 14.78 8 14.5 8H13.5C13.22 8 13 8.22 13 8.5V6H11V8.5C11 8.22 10.78 8 10.5 8H9.5C9.22 8 9 8.22 9 8.5V6H7V9H5V6C5 4.9 5.9 4 7 4Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Interiér Detailing</h3>
+                    <p>Hloubkové čištění a renovace interiéru včetně kůže, alcantary a plastů. Antibakteriální ošetření a ozonová dezinfekce pro zdravé prostředí.</p>
+                    <span class="eco-badge">ECO FRIENDLY</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Keramická ochrana</h3>
+                    <p>Nejmodernější nano-keramické povlaky pro maximální ochranu laku. Hydrofobní efekt, UV ochrana a záruka až 5 let.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9.5 3C5.36 3 2 4.69 2 6.5V8.14C2.74 9.25 5.82 10 9.5 10S16.26 9.25 17 8.14V6.5C17 4.69 13.64 3 9.5 3M2 10.45V12.09C2.74 13.2 5.82 13.95 9.5 13.95S16.26 13.2 17 12.09V10.45C15.5 11.5 12.73 12 9.5 12S3.5 11.5 2 10.45M2 14.4V16.04C2.74 17.15 5.82 17.9 9.5 17.9C10.38 17.9 11.21 17.84 12 17.74C11.43 16.63 11.08 15.38 11.03 14.04C10.53 14.12 10.03 14.16 9.5 14.16C6.27 14.16 3.5 13.66 2 14.4M13 16L18 20V17H22V13H18V10L13 14H16V16H13M18.04 11.45C17.96 11.43 17.88 11.41 17.8 11.4C19.33 10.5 20.26 9.25 20.26 8.07C20.26 6.26 16.9 4.58 12.76 4.58C12.23 4.58 11.71 4.61 11.2 4.66C12 3.97 13.1 3.47 14.33 3.26C14.5 3.22 14.72 3.21 14.95 3.2C19.09 3.2 22.45 4.88 22.45 6.69V8.33C22.26 8.75 21.91 9.14 21.45 9.5C20.5 10.18 19.22 10.75 17.79 11.14Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Paint Correction</h3>
+                    <p>Odstranění škrábanců, oxidace a nedokonalostí laku pomocí pokročilých leštících technik. Obnova původního vzhledu bez lakování.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 3.77L11.25 4.61C11.25 4.61 9.97 6.06 8.68 7.94C7.39 9.82 6 12.07 6 14.23A6 6 0 0 0 12 20.23A6 6 0 0 0 18 14.23C18 12.07 16.61 9.82 15.32 7.94C14.03 6.06 12.75 4.61 12.75 4.61L12 3.77M12 6.9C12.44 7.42 12.84 7.85 13.68 9.07C14.89 10.83 16 13.07 16 14.23C16 16.45 14.22 18.23 12 18.23S8 16.45 8 14.23C8 13.07 9.11 10.83 10.32 9.07C11.16 7.85 11.56 7.42 12 6.9M9.05 12.2C8.35 12.94 8 14.09 8 14.09C8 16.18 9.79 17.89 11.88 17.89C11.88 17.89 10.73 17.54 10 16.81C9.25 16.07 8.91 14.92 9.61 13.56C10.31 12.2 11.8 10.73 11.8 10.73C11.1 11.47 9.75 11.47 9.05 12.2Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">EKO Mytí bez vody</h3>
+                    <p>Revoluční technologie čištění bez použití vody. Šetrné k životnímu prostředí a stejně efektivní jako tradiční metody.</p>
+                    <span class="eco-badge">ECO FRIENDLY</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2L2 7V12.5C2 15.89 3.26 19.09 5.46 21.47L12 11.68L18.54 21.47C20.74 19.09 22 15.89 22 12.5V7L12 2M12 4.18L19 7.72V12.5C19 12.94 18.96 13.38 18.9 13.81L12 3.89L5.1 13.81C5.04 13.38 5 12.94 5 12.5V7.72L12 4.18M12 7.86L15.71 14.21C15.58 15.57 15.17 16.86 14.54 18L12 14.15L9.46 18C8.83 16.86 8.42 15.57 8.29 14.21L12 7.86Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Premium Packages</h3>
+                    <p>Kompletní detailingové balíčky pro nejnáročnější klienty. Od základní péče až po show-room finish pro sběratelské kousky.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Timeline -->
+    <section class="process" id="process">
+        <div class="process-container">
+            <h2>Cesta k dokonalosti</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">01</div>
+                    <div class="timeline-content">
+                        <h3>Konzultace a inspekce</h3>
+                        <p>Detailní prohlídka vašeho vozu a návrh optimálního řešení na míru.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">02</div>
+                    <div class="timeline-content">
+                        <h3>Dekontaminace a příprava</h3>
+                        <p>Důkladné očištění od všech nečistot, dehtu a průmyslového spadu.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">03</div>
+                    <div class="timeline-content">
+                        <h3>Korekce laku</h3>
+                        <p>Odstranění škrábanců a nedokonalostí pomocí profesionálních leštících technik.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">04</div>
+                    <div class="timeline-content">
+                        <h3>Ochrana a zapečetění</h3>
+                        <p>Aplikace prémiových ochranných vrstev pro dlouhodobou ochranu.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">05</div>
+                    <div class="timeline-content">
+                        <h3>Detaily a finální úpravy</h3>
+                        <p>Péče o každý detail včetně pneumatik, skel a chromových prvků.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">06</div>
+                    <div class="timeline-content">
+                        <h3>Finální kontrola a předání</h3>
+                        <p>Důkladná kontrola kvality a předání vozu s instrukcemi pro údržbu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Gallery -->
+    <section class="portfolio" id="portfolio">
+        <div class="portfolio-container">
+            <h2>Naše mistrovská díla</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Detailed luxury car">
+                    <div class="gallery-overlay">
+                        <h3>Mercedes-Benz S-Class</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Sports car detail">
+                    <div class="gallery-overlay">
+                        <h3>Porsche 911 Turbo</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Interior detailing">
+                    <div class="gallery-overlay">
+                        <h3>BMW M Series Interior</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/2127022/pexels-photo-2127022.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Paint correction">
+                    <div class="gallery-overlay">
+                        <h3>Audi RS7 Paint Correction</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3786091/pexels-photo-3786091.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Wheel detailing">
+                    <div class="gallery-overlay">
+                        <h3>Wheel Restoration</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/5833265/pexels-photo-5833265.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Ceramic coating">
+                    <div class="gallery-overlay">
+                        <h3>Ceramic Coating Application</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-container">
+            <h2>Spokojení majitelé, zářící vozy</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <img src="https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="BMW" class="testimonial-image">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Neuvěřitelná práce! Můj vůz vypadá lépe než když jsem ho kupoval. Profesionální přístup a skvělé výsledky."</p>
+                    <p class="testimonial-author">Martin K. - BMW 5 Series</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Mercedes" class="testimonial-image">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Keramická ochrana je fantastická. Po 6 měsících stále vypadá jako nová. Určitě doporučuji!"</p>
+                    <p class="testimonial-author">Petra N. - Mercedes GLE</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Audi" class="testimonial-image">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Perfektní práce na mém Audi. Interiér voní jako nový a exteriér má neuvěřitelný lesk. Jsem nadšený!"</p>
+                    <p class="testimonial-author">Tomáš V. - Audi Q7</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Kontaktujte nás</h2>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Adresa</h3>
+                        <p>Průmyslová 1234<br>Ostrava 702 00</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Telefon</h3>
+                        <p>+420 777 888 999</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>E-mail</h3>
+                        <p>info@elitedetailing.cz</p>
+                    </div>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d41142.73186146!2d18.2625!3d49.8209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713e331c2a0eb87%3A0x400af0f6614b1b0!2sOstrava!5e0!3m2!1sen!2scz!4v1635959562318!5m2!1sen!2scz" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Elite Car Detailing. Všechna práva vyhrazena. | Vytvořeno s vášní pro dokonalost</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.querySelector('.loader').style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Three.js Liquid Metal Effect
+        let scene, camera, renderer, material;
+        
+        function initThree() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+            
+            // Create liquid metal shader
+            const geometry = new THREE.PlaneGeometry(5, 5, 100, 100);
+            
+            material = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 },
+                    resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    uniform float time;
+                    
+                    void main() {
+                        vUv = uv;
+                        vec3 pos = position;
+                        pos.z = sin(pos.x * 5.0 + time) * 0.1 + sin(pos.y * 5.0 + time * 0.8) * 0.1;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    varying vec2 vUv;
+                    uniform float time;
+                    uniform vec2 resolution;
+                    
+                    void main() {
+                        vec2 uv = vUv;
+                        
+                        float metallic = sin(uv.x * 10.0 + time) * sin(uv.y * 10.0 + time * 0.8);
+                        metallic = smoothstep(0.0, 0.7, metallic);
+                        
+                        vec3 goldColor = vec3(0.831, 0.686, 0.216);
+                        vec3 darkColor = vec3(0.039, 0.039, 0.039);
+                        
+                        vec3 color = mix(darkColor, goldColor, metallic * 0.3);
+                        
+                        gl_FragColor = vec4(color, 0.6);
+                    }
+                `,
+                transparent: true
+            });
+            
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+            
+            camera.position.z = 2;
+        }
+        
+        function animateThree() {
+            requestAnimationFrame(animateThree);
+            material.uniforms.time.value += 0.01;
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize Three.js
+        initThree();
+        animateThree();
+        
+        // Handle resize
+        window.addEventListener('resize', () => {
+            if (camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+            }
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Hero animations
+        gsap.timeline({delay: 1.5})
+            .to('.hero-title', {opacity: 1, y: 0, duration: 1, ease: 'power3.out'})
+            .to('.hero-description', {opacity: 1, y: 0, duration: 1, ease: 'power3.out'}, '-=0.5')
+            .to('.cta-button', {opacity: 1, y: 0, duration: 1, ease: 'power3.out'}, '-=0.5');
+        
+        // Scroll animations
+        gsap.utils.toArray('.story-card').forEach(element => {
+            gsap.from(element, {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+        
+        gsap.utils.toArray('.service-card').forEach((element, index) => {
+            gsap.from(element, {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                delay: index * 0.15,
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 85%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+        
+        gsap.utils.toArray('.timeline-item').forEach((element, index) => {
+            gsap.to(element, {
+                x: 0,
+                opacity: 1,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+        
+        gsap.utils.toArray('.gallery-item').forEach((element, index) => {
+            gsap.to(element, {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                delay: index * 0.1,
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Before/After Slider
+        const slider = document.querySelector('.before-after-slider');
+        const sliderHandle = document.querySelector('.slider-handle');
+        const afterImage = document.querySelector('.after-image');
+        let isDragging = false;
+        
+        function updateSliderPosition(e) {
+            if (!isDragging) return;
+            
+            const rect = slider.getBoundingClientRect();
+            const x = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            let position = ((x - rect.left) / rect.width) * 100;
+            
+            position = Math.max(0, Math.min(100, position));
+            
+            sliderHandle.style.left = position + '%';
+            afterImage.style.clipPath = `polygon(${position}% 0, 100% 0, 100% 100%, ${position}% 100%)`;
+        }
+        
+        slider.addEventListener('mousedown', () => isDragging = true);
+        slider.addEventListener('mouseup', () => isDragging = false);
+        slider.addEventListener('mousemove', updateSliderPosition);
+        slider.addEventListener('mouseleave', () => isDragging = false);
+        
+        // Touch events for mobile
+        slider.addEventListener('touchstart', () => isDragging = true);
+        slider.addEventListener('touchend', () => isDragging = false);
+        slider.addEventListener('touchmove', updateSliderPosition);
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+        });
+
+        // Magnetic button effect
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
