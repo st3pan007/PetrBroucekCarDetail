@@ -80,63 +80,96 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 5%;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(20px);
+            padding: 2rem 4%;
+            padding-top: calc(2rem + env(safe-area-inset-top));
             z-index: 1000;
             transition: all 0.3s ease;
         }
         
-        nav.scrolled {
-            padding: 1rem 5%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        nav.menu-open {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        nav.menu-open {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
         }
         
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
-        }
-        
-        .logo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            padding: 0;
             position: relative;
         }
         
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-gold);
-            transition: width 0.3s ease;
+        .logo {
+            height: 100px;
+            transition: height 0.3s ease;
         }
         
-        .nav-links a:hover::after {
-            width: 100%;
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .nav-links {
+            display: none;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1001;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger:hover {
+            transform: scale(1.1);
+        }
+        
+        @media (hover: none) and (pointer: coarse) {
+            .hamburger:hover {
+                transform: none;
+            }
+            
+            .hamburger:active {
+                transform: scale(0.95);
+            }
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(9px, 9px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(9px, -9px);
         }
         
         /* Hero Section with Liquid Metal Effect */
@@ -164,14 +197,6 @@
             text-align: center;
             max-width: 900px;
             padding: 0 2rem;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--accent-gold);
-            margin-bottom: 1rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
         }
         
         .hero-title {
@@ -505,6 +530,109 @@
             opacity: 1;
         }
         
+        /* Pricing Section */
+        .pricing {
+            padding: 8rem 5%;
+            background: var(--secondary-dark);
+        }
+        
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .pricing-card {
+            background: var(--primary-dark);
+            padding: 3rem;
+            border-radius: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--accent-gold);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'NEJPOPULÁRNĚJŠÍ';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            padding: 0.5rem 2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .pricing-card.exclusive {
+            transform: scale(1.08);
+            z-index: 2;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            margin: 0 -10px;
+        }
+        
+        .pricing-card.exclusive:hover {
+            transform: scale(1.08) translateY(-10px);
+        }
+        
+        .pricing-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 2rem 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .pricing-price span {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+        }
+        
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--accent-gold);
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+        
         /* Testimonials */
         .testimonials {
             padding: 8rem 5%;
@@ -553,6 +681,92 @@
         .testimonial-author {
             font-weight: 600;
             color: var(--accent-gold);
+        }
+        
+        /* Booking Section */
+        .booking {
+            padding: 8rem 5%;
+            background: var(--secondary-dark);
+        }
+        
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .booking-form {
+            background: var(--primary-dark);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            text-align: left;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+        
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+            padding-right: 3rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary-dark);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            color: var(--text-light);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            margin-top: 2rem;
+        }
+        
+        .form-submit .cta-button {
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
         }
         
         /* Contact Section */
@@ -622,28 +836,157 @@
         }
         
         /* Mobile Menu */
-        .mobile-menu-toggle {
-            display: none;
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            background: var(--primary-dark);
+            z-index: 998;
+            display: flex;
             flex-direction: column;
-            gap: 4px;
-            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
         }
         
-        .mobile-menu-toggle span {
-            width: 25px;
-            height: 2px;
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+        }
+        
+        .mobile-menu-links li {
+            margin: 1.5rem 0;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease;
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-menu-links li {
+                margin: 1rem 0;
+            }
+            
+            .mobile-menu-links a {
+                font-size: clamp(1.8rem, 7vw, 2.5rem);
+                padding: 8px 15px;
+            }
+        }
+        
+        .mobile-menu.active .mobile-menu-links li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .mobile-menu.active .mobile-menu-links li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(5) { transition-delay: 0.5s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(6) { transition-delay: 0.6s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(7) { transition-delay: 0.7s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(8) { transition-delay: 0.8s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(9) { transition-delay: 0.9s; }
+        
+        .mobile-menu-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 10px 20px;
+        }
+        
+        .mobile-menu-links a:hover {
+            color: var(--accent-gold);
+            transform: scale(1.1);
+        }
+        
+        /* Mobile Menu Close Button */
+        .mobile-menu-close {
+            position: absolute;
+            top: 2rem;
+            top: calc(2rem + env(safe-area-inset-top));
+            right: 4%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-close {
+                top: 1rem;
+                top: calc(1rem + env(safe-area-inset-top));
+                right: 3%;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .mobile-menu-close span {
+                width: 30px;
+                height: 3px;
+            }
+        }
+        
+        .mobile-menu-close span {
+            position: absolute;
+            width: 40px;
+            height: 4px;
             background: var(--text-light);
             transition: all 0.3s ease;
         }
         
+        .mobile-menu-close span:nth-child(1) {
+            transform: rotate(45deg);
+        }
+        
+        .mobile-menu-close span:nth-child(2) {
+            transform: rotate(-45deg);
+        }
+        
+        .mobile-menu-close:hover span {
+            background: var(--accent-gold);
+        }
+        
         /* Responsive */
         @media (max-width: 968px) {
-            .nav-links {
-                display: none;
+            nav {
+                padding: 1.5rem 5%;
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(7px, 7px);
             }
             
-            .mobile-menu-toggle {
-                display: flex;
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .hamburger {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .hamburger span {
+                width: 25px;
+                height: 3px;
             }
             
             .story-container,
@@ -656,7 +999,172 @@
                 gap: 2rem;
             }
             
-            .testimonials-grid {
+        /* Pricing Section - Mobile optimizations */
+        @media (max-width: 1024px) {
+            .pricing {
+                padding: 80px 30px;
+            }
+            
+            .pricing-container p {
+                font-size: 1.1rem;
+                margin-bottom: 3rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            
+            .pricing-card:nth-child(3) {
+                grid-column: span 2;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .pricing-card.exclusive {
+                transform: scale(1.05);
+                margin: 0 -5px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .pricing {
+                padding: 80px 20px;
+            }
+            
+            .pricing-container h2 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .pricing-container p {
+                font-size: 1rem;
+                margin-bottom: 2.5rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .pricing-card {
+                padding: 2.5rem;
+                border-radius: 15px;
+            }
+            
+            .pricing-card:nth-child(3) {
+                grid-column: auto;
+                max-width: none;
+            }
+            
+            .pricing-card.featured,
+            .pricing-card.exclusive {
+                transform: none;
+                margin: 0;
+            }
+            
+            .pricing-card.featured::before {
+                top: -12px;
+                font-size: 0.75rem;
+                padding: 0.4rem 1.5rem;
+            }
+            
+            .pricing-title {
+                font-size: 1.6rem;
+            }
+            
+            .pricing-price {
+                font-size: 2.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .pricing-price span {
+                font-size: 1rem;
+            }
+            
+            .pricing-features {
+                margin: 1.5rem 0;
+            }
+            
+            .pricing-features li {
+                padding: 0.6rem 0;
+                font-size: 0.95rem;
+            }
+            
+            .pricing-card .cta-button {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .pricing {
+                padding: 60px 15px;
+            }
+            
+            .pricing-container h2 {
+                font-size: 2rem;
+            }
+            
+            .pricing-container p {
+                font-size: 0.95rem;
+            }
+            
+            .pricing-card {
+                padding: 2rem;
+            }
+            
+            .pricing-title {
+                font-size: 1.4rem;
+            }
+            
+            .pricing-price {
+                font-size: 2.2rem;
+            }
+            
+            .pricing-features li {
+                font-size: 0.9rem;
+                padding: 0.5rem 0;
+            }
+            
+            .pricing-card .cta-button {
+                padding: 14px 25px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Touch devices optimization */
+        @media (hover: none) and (pointer: coarse) {
+            .pricing-card:hover {
+                transform: none !important;
+            }
+            
+            .pricing-card.exclusive {
+                transform: scale(1.08) !important;
+            }
+            
+            @media (max-width: 768px) {
+                .pricing-card.exclusive {
+                    transform: none !important;
+                }
+            }
+            
+            .pricing-card:active {
+                transform: scale(0.98);
+            }
+            
+            .pricing-card .cta-button:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .pricing-card .cta-button:active {
+                transform: scale(0.98);
+                box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+            }
+        }
+            
+            .form-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -709,15 +1217,21 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo">ELITE DETAILING</div>
-            <ul class="nav-links">
+            <div class="logo">
+                <img src="https://imagedelivery.net/2OhTeUm5dT07PSQroFepFw/c6caed29-bc32-47d4-796c-7e79dd2c7500/public" alt="Car Detailing Logo">
+            </div>
+            <ul class="nav-links" style="display: none;">
                 <li><a href="#home">Domů</a></li>
+                <li><a href="#about">O nás</a></li>
+                <li><a href="#transformation">Transformace</a></li>
+                <li><a href="#gallery">Galerie</a></li>
                 <li><a href="#services">Služby</a></li>
+                <li><a href="#pricing">Ceník</a></li>
                 <li><a href="#process">Proces</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#booking">Rezervace</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
-            <div class="mobile-menu-toggle">
+            <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -729,15 +1243,14 @@
     <section class="hero" id="home">
         <div id="canvas-container"></div>
         <div class="hero-content">
-            <p class="hero-subtitle">Precision Meets Passion</p>
             <h1 class="hero-title">Váš vůz zaslouží<br>mistrovskou péči</h1>
             <p class="hero-description">Přeměňujeme obyčejné automobily v zářící mistrovská díla pomocí nejmodernějších technologií a vášně pro dokonalost.</p>
             <a href="#contact" class="cta-button">Rezervovat termín detailingu</a>
         </div>
     </section>
 
-    <!-- Story Section -->
-    <section class="story" id="story">
+    <!-- O nás Section -->
+    <section class="story" id="about">
         <div class="story-container">
             <div class="story-content">
                 <div class="story-card">
@@ -747,7 +1260,7 @@
                 </div>
             </div>
             <div class="story-image">
-                <img src="https://images.pexels.com/photos/6873080/pexels-photo-6873080.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Detailing process">
+                <img src="https://imagedelivery.net/2OhTeUm5dT07PSQroFepFw/9a1cc6b6-1b49-4173-608b-6a5e427d6800/public" alt="Detailing process">
             </div>
         </div>
     </section>
@@ -765,6 +1278,51 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M8 12L4 8L8 4M16 12L20 8L16 4M4 8H20M8 20L4 16L8 12M16 20L20 16L16 12M4 16H20" stroke="#0A0A0A" stroke-width="2"/>
                         </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerie -->
+    <section class="portfolio" id="gallery">
+        <div class="portfolio-container">
+            <h2>Naše práce</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Detailed luxury car">
+                    <div class="gallery-overlay">
+                        <h3>Mercedes-Benz S-Class</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Sports car detail">
+                    <div class="gallery-overlay">
+                        <h3>Porsche 911 Turbo</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Interior detailing">
+                    <div class="gallery-overlay">
+                        <h3>BMW M Series Interior</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/2127022/pexels-photo-2127022.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Paint correction">
+                    <div class="gallery-overlay">
+                        <h3>Audi RS7 Paint Correction</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3786091/pexels-photo-3786091.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Wheel detailing">
+                    <div class="gallery-overlay">
+                        <h3>Wheel Restoration</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/5833265/pexels-photo-5833265.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Ceramic coating">
+                    <div class="gallery-overlay">
+                        <h3>Ceramic Coating Application</h3>
                     </div>
                 </div>
             </div>
@@ -836,6 +1394,55 @@
         </div>
     </section>
 
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <h2>Naše cenové balíčky</h2>
+            <p>Vyberte si balíček, který nejlépe vyhovuje vašim potřebám</p>
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <h3 class="pricing-title">PREMIUM</h3>
+                    <div class="pricing-price">5 990 Kč<span>/vůz</span></div>
+                    <ul class="pricing-features">
+                        <li>Vše ze základního balíčku</li>
+                        <li>Jednostupňová korekce laku</li>
+                        <li>Keramický sealant (6 měsíců)</li>
+                        <li>Kompletní interiér detailing</li>
+                        <li>Čištění motorového prostoru</li>
+                        <li>Doba trvání: 6-8 hodin</li>
+                    </ul>
+                    <a href="#booking" class="cta-button">Rezervovat</a>
+                </div>
+                <div class="pricing-card exclusive">
+                    <h3 class="pricing-title">EXCLUSIVE</h3>
+                    <div class="pricing-price">12 990 Kč<span>/vůz</span></div>
+                    <ul class="pricing-features">
+                        <li>Vše z prémiového balíčku</li>
+                        <li>Dvoustupňová korekce laku</li>
+                        <li>Keramická ochrana (3 roky)</li>
+                        <li>Renovace kůže a alcantary</li>
+                        <li>PPF na vybrané části</li>
+                        <li>Doba trvání: 2 dny</li>
+                    </ul>
+                    <a href="#booking" class="cta-button">Rezervovat</a>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="pricing-title">BASIC</h3>
+                    <div class="pricing-price">2 990 Kč<span>/vůz</span></div>
+                    <ul class="pricing-features">
+                        <li>Exteriér mytí a sušení</li>
+                        <li>Dekontaminace laku</li>
+                        <li>Základní vosk</li>
+                        <li>Čištění skel</li>
+                        <li>Ošetření pneumatik</li>
+                        <li>Doba trvání: 3-4 hodiny</li>
+                    </ul>
+                    <a href="#booking" class="cta-button">Rezervovat</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Process Timeline -->
     <section class="process" id="process">
         <div class="process-container">
@@ -887,51 +1494,6 @@
         </div>
     </section>
 
-    <!-- Portfolio Gallery -->
-    <section class="portfolio" id="portfolio">
-        <div class="portfolio-container">
-            <h2>Naše mistrovská díla</h2>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Detailed luxury car">
-                    <div class="gallery-overlay">
-                        <h3>Mercedes-Benz S-Class</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/3311574/pexels-photo-3311574.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Sports car detail">
-                    <div class="gallery-overlay">
-                        <h3>Porsche 911 Turbo</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Interior detailing">
-                    <div class="gallery-overlay">
-                        <h3>BMW M Series Interior</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/2127022/pexels-photo-2127022.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Paint correction">
-                    <div class="gallery-overlay">
-                        <h3>Audi RS7 Paint Correction</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/3786091/pexels-photo-3786091.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Wheel detailing">
-                    <div class="gallery-overlay">
-                        <h3>Wheel Restoration</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.pexels.com/photos/5833265/pexels-photo-5833265.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Ceramic coating">
-                    <div class="gallery-overlay">
-                        <h3>Ceramic Coating Application</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Testimonials -->
     <section class="testimonials" id="testimonials">
         <div class="testimonials-container">
@@ -956,6 +1518,55 @@
                     <p class="testimonial-author">Tomáš V. - Audi Q7</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking" id="booking">
+        <div class="booking-container">
+            <h2>Rezervujte si termín</h2>
+            <p>Vyplňte formulář níže a my se vám ozveme do 24 hodin s potvrzením termínu</p>
+            <form class="booking-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Jméno a příjmení *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefon *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="car">Značka a model vozu *</label>
+                        <input type="text" id="car" name="car" placeholder="např. BMW 5 Series" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Vybraná služba *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Vyberte službu</option>
+                            <option value="premium">Premium balíček</option>
+                            <option value="exclusive">Exclusive balíček</option>
+                            <option value="basic">Basic balíček</option>
+                            <option value="custom">Individuální služba</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Preferovaný termín *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Dodatečné informace</label>
+                        <textarea id="message" name="message" placeholder="Popište stav vašeho vozu nebo speciální požadavky..."></textarea>
+                    </div>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="cta-button">Odeslat rezervaci</button>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -1016,23 +1627,18 @@
     <script>
         // Loader
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelector('.loader').style.opacity = '0';
+            const loader = document.querySelector('.loader');
+            if (loader) {
                 setTimeout(() => {
-                    document.querySelector('.loader').style.display = 'none';
-                }, 500);
-            }, 1000);
-        });
-
-        // Navigation scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 500);
+                }, 1000);
             }
         });
+
+
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1060,7 +1666,7 @@
             document.getElementById('canvas-container').appendChild(renderer.domElement);
             
             // Create liquid metal shader
-            const geometry = new THREE.PlaneGeometry(5, 5, 100, 100);
+            const geometry = new THREE.PlaneGeometry(8, 8, 100, 100);
             
             material = new THREE.ShaderMaterial({
                 uniforms: {
@@ -1092,9 +1698,9 @@
                         vec3 goldColor = vec3(0.831, 0.686, 0.216);
                         vec3 darkColor = vec3(0.039, 0.039, 0.039);
                         
-                        vec3 color = mix(darkColor, goldColor, metallic * 0.3);
+                        vec3 color = mix(darkColor, goldColor, metallic * 0.2);
                         
-                        gl_FragColor = vec4(color, 0.6);
+                        gl_FragColor = vec4(color, 0.4);
                     }
                 `,
                 transparent: true
@@ -1103,7 +1709,7 @@
             const mesh = new THREE.Mesh(geometry, material);
             scene.add(mesh);
             
-            camera.position.z = 2;
+            camera.position.z = 3;
         }
         
         function animateThree() {
@@ -1133,7 +1739,7 @@
         gsap.timeline({delay: 1.5})
             .to('.hero-title', {opacity: 1, y: 0, duration: 1, ease: 'power3.out'})
             .to('.hero-description', {opacity: 1, y: 0, duration: 1, ease: 'power3.out'}, '-=0.5')
-            .to('.cta-button', {opacity: 1, y: 0, duration: 1, ease: 'power3.out'}, '-=0.5');
+            .to('.btn-hero-primary, .btn-hero-secondary', {opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.2}, '-=0.5');
         
         // Scroll animations
         gsap.utils.toArray('.story-card').forEach(element => {
@@ -1193,6 +1799,35 @@
                 }
             });
         });
+        
+        // Pricing cards animation
+        gsap.utils.toArray('.pricing-card').forEach((element, index) => {
+            gsap.from(element, {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                delay: index * 0.2,
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+        
+        // Booking form animation
+        gsap.from('.booking-form', {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            scrollTrigger: {
+                trigger: '.booking-form',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            }
+        });
 
         // Before/After Slider
         const slider = document.querySelector('.before-after-slider');
@@ -1224,13 +1859,23 @@
         slider.addEventListener('touchmove', updateSliderPosition);
 
         // Mobile menu toggle
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuToggle.classList.toggle('active');
-        });
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('nav');
+            const body = document.body;
+            
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('menu-open');
+            
+            // Prevent scrolling when menu is open
+            if (mobileMenu.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+            } else {
+                body.style.overflow = '';
+            }
+        }
 
         // Magnetic button effect
         document.querySelectorAll('.cta-button').forEach(button => {
@@ -1246,6 +1891,25 @@
                 button.style.transform = '';
             });
         });
+        
+        // Booking form submission
+        const bookingForm = document.querySelector('.booking-form');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(bookingForm);
+                const data = Object.fromEntries(formData);
+                
+                // Here you would normally send the data to a server
+                console.log('Booking data:', data);
+                
+                // Show success message
+                alert('Děkujeme za vaši rezervaci! Ozveme se vám do 24 hodin.');
+                bookingForm.reset();
+            });
+        }
     </script>
 </body>
 </html>
